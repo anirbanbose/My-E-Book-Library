@@ -1,0 +1,38 @@
+<div class="header-container">
+    <div class="item-left">
+        <h4 class="mat-h4" style="margin-left: 10px;">{{headerText}}</h4>
+    </div>
+
+    <div class="item-right">
+        @if(showAdd == true)
+        {
+        <div class="add-button">
+            <button mat-raised-button color="Primary" (click)="onAddClick()">
+                <span>Add</span>
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        }
+
+        @if(showSearch == true)
+        {
+        <div class="search-box">
+            <mat-form-field style="width: 98%;">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="onSearchPressed($event)" placeholder="Search..." [(ngModel)]="searchText" />
+                @if (searchText) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
+                <button matSuffix mat-icon-button aria-label="Search" (click)="applyFilter()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+        }
+    </div>
+
+
+</div>

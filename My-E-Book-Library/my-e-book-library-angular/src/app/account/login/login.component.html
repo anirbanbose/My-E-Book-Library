@@ -1,0 +1,66 @@
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if(errorMessages.length > 0){
+      <div class="row">
+        <div class="col">
+          <ul>
+            @for(errorMessage of errorMessages; track $index){
+            <li>
+              <mat-error>{{errorMessage}}</mat-error>
+            </li>
+            }
+          </ul>
+
+        </div>
+      </div>
+      }
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            @if (loginForm.controls['email'].hasError('required')) {
+            <mat-error>Email is <strong>required</strong></mat-error>
+            }
+            @if (loginForm.controls['email'].hasError('email')) {
+            <mat-error>Please enter a valid <strong>Email Address</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'">
+            <a mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()">
+              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </a>
+            @if (loginForm.controls['password'].hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox class="checkbox-margin" formControlName="rememberMe">Remember Me?</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col"><a routerLink="/account/register">Register</a></div>
+        <div class="col" style="text-align: right;"><a routerLink="/account/forgot-password">Forgot Password?</a></div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button color="primary" type="submit">Submit
+        <mat-icon>login</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,0 +1,174 @@
+<div class="mat-elevation-z8 wrapper">
+    <feature-page-header [headerText]="'Profile'" [showSearch]="false" [showAdd]="false" />
+    <div class="profile-container">
+        <form [formGroup]="profileForm" novalidate (ngSubmit)="onSubmit()" class="inner-section">
+            <mat-card class="profile-card">
+                <mat-card-header>
+                    <mat-card-title>My Account</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>First Name</mat-label>
+                                <input matInput formControlName="firstName">
+                                @if (profileForm.controls['firstName'].hasError('required')) {
+                                <mat-error>First Name is <strong>required</strong></mat-error>
+                                }
+                                @if (profileForm.controls['firstName'].hasError('maxlength')) {
+                                <mat-error>First Name can't have more than <strong>250 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Middle Name</mat-label>
+                                <input matInput formControlName="middleName">
+                                @if (profileForm.controls['middleName'].hasError('maxlength')) {
+                                <mat-error>Middle Name can't have more than <strong>200 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput formControlName="lastName">
+                                @if (profileForm.controls['lastName'].hasError('required')) {
+                                <mat-error>Last Name is <strong>required</strong></mat-error>
+                                }
+                                @if (profileForm.controls['lastName'].hasError('maxlength')) {
+                                <mat-error>Last Name can't have more than <strong>250 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="email">
+                                @if (profileForm.controls['email'].hasError('required')) {
+                                <mat-error>Email is <strong>required</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Date of birth</mat-label>
+                                <input matInput formControlName="birthDate" [matDatepicker]="picker"
+                                    (click)="picker.open()" (focus)="picker.open()">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                @if (profileForm.controls['birthDate'].hasError('matDatepickerParse')) {
+                                <mat-error>Not a valid <strong>date</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col">
+                            <button mat-flat-button color="primary" type="submit">Save
+                                <mat-icon>save</mat-icon></button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+
+        <form [formGroup]="changePasswordForm" novalidate (ngSubmit)="onPasswordChange()" class="inner-section">
+            <mat-card class="profile-card">
+                <mat-card-header>
+                    <mat-card-title>Change Password</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Current Password</mat-label>
+                                <input matInput type="password" formControlName="oldPassword"
+                                    [type]="hideCurrentPassword() ? 'password' : 'text'">
+                                <a mat-icon-button matSuffix (click)="toggleCurrentPassword($event)"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideCurrentPassword()">
+                                    <mat-icon>{{hideCurrentPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </a>
+                                @if (changePasswordForm.controls['oldPassword'].hasError('required')) {
+                                <mat-error>Current Password is <strong>required</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>New Password</mat-label>
+                                <input matInput type="password" formControlName="newPassword"
+                                    [type]="hideNewPassword() ? 'password' : 'text'">
+                                <a mat-icon-button matSuffix (click)="toggleNewPassword($event)"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideNewPassword()">
+                                    <mat-icon>{{hideNewPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </a>
+                                <mat-hint>The Password length must be within
+                                    <strong>8 and 20 characters</strong> and must contain
+                                    both <strong>upper</strong> and <strong>lower</strong>
+                                    case characters and <strong>digits</strong>.</mat-hint>
+                                @if (changePasswordForm.controls['newPassword'].hasError('required')) {
+                                <mat-error>New Password is <strong>required</strong></mat-error>
+                                }
+                                @if (changePasswordForm.controls['newPassword'].hasError('maxlength')) {
+                                <mat-error>Password can't have more than <strong>20 characters</strong></mat-error>
+                                }
+                                @if (changePasswordForm.controls['newPassword'].hasError('minLength')) {
+                                <mat-error>Password can't be less than <strong>8 characters</strong></mat-error>
+                                }
+                                @if (changePasswordForm.controls['newPassword'].hasError('pattern')) {
+                                <mat-error>The Password length must be within
+                                    <strong>8 and 20 characters</strong> and must contain
+                                    both <strong>upper</strong> and <strong>lower</strong>
+                                    case characters and <strong>digits</strong>.</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Confirm New Password</mat-label>
+                                <input matInput type="password" formControlName="confirmNewPassword"
+                                    [type]="hideConfirmNewPassword() ? 'password' : 'text'">
+                                <a mat-icon-button matSuffix (click)="toggleConfirmNewPassword($event)"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmNewPassword()">
+                                    <mat-icon>{{hideConfirmNewPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </a>
+                                @if (changePasswordForm.controls['confirmNewPassword'].hasError('required')) {
+                                <mat-error>Confirm New Password is <strong>required</strong></mat-error>
+                                }
+                                @if (changePasswordForm.controls['confirmNewPassword'].hasError('passwordsDoNotMatch'))
+                                {
+                                <mat-error>Passwords do not match</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col">
+                            <button mat-flat-button color="primary" type="submit">Change Password
+                                <mat-icon>save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</div>

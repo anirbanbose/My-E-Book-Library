@@ -1,0 +1,37 @@
+<span mat-dialog-title>{{mode}} Genre</span>
+<form [formGroup]="genreForm" (ngSubmit)="onSubmit()" novalidate>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <mat-label>Genre Name</mat-label>
+                    <input matInput formControlName="genreName">
+                    @if (genreForm.controls['genreName'].hasError('required')) {
+                    <mat-error>Genre Name is <strong>required</strong></mat-error>
+                    }
+                    @if (genreForm.controls['genreName'].hasError('maxlength')) {
+                    <mat-error>Genre Name can't have more than <strong>150 characters.</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        @if(errorMessages.length > 0){
+        <div class="row">
+            <div class="col">
+                <ul>
+                    @for(errorMessage of errorMessages; track $index){
+                    <li>
+                        <mat-error>{{errorMessage}}</mat-error>
+                    </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+        }
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onCancel()" type="button">Cancel</button>
+        <button mat-button cdkFocusInitial type="submit">Save</button>
+    </mat-dialog-actions>
+</form>

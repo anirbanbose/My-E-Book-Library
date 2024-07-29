@@ -1,0 +1,32 @@
+<table mat-table class="full-width-table" aria-label="Elements" [dataSource]="dataSource">
+
+    <ng-container matColumnDef="fileName">
+        <th mat-header-cell *matHeaderCellDef>File Name</th>
+        <td mat-cell *matCellDef="let row"><a (click)="downloadFile(row.id)"
+                style="cursor: pointer;">{{row.fileName}}</a></td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+            <a (click)="downloadFile(row.id)" style="cursor: pointer;">
+                @if(row.fileType == 'application/pdf')
+                {
+                <mat-icon class="file-icon pdf" fontSet="fa" fontIcon="fa-file-pdf"></mat-icon>
+                }
+                @else if (row.fileType == 'application/msword' || row.fileType ==
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+                {
+                <mat-icon class="file-icon word" fontSet="fa" fontIcon="fa-file-word"></mat-icon>
+                }
+                @else
+                {
+                <mat-icon class="file-icon file" fontSet="fa" fontIcon="fa-file"></mat-icon>
+                }
+            </a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

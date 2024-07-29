@@ -1,0 +1,18 @@
+<div class="grid-item">
+    <mat-form-field class="full-width">
+        <mat-label>Select {{labelText}}</mat-label>
+        <input type="text" placeholder="Search author..." matInput [formControl]="searchCtrl"
+            [matAutocomplete]="auto" />
+        @if (searchCtrl.value) {
+        <button matSuffix mat-icon-button aria-label="Clear" type="button" (click)="clearItem()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+        }
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="itemSelected($event)" autoActiveFirstOption="true"
+            [displayWith]="showText">
+            <mat-option *ngFor="let option of filteredItems | async" [value]="option">
+                {{option[textPropertyName]}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</div>

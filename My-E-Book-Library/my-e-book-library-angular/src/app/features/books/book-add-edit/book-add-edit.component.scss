@@ -1,0 +1,148 @@
+.book-card {
+  width: 600px;
+  min-width: 500px;
+  margin: 20px auto;
+}
+
+.book-container {
+  display: flex;
+}
+
+.inner-section {
+  flex: 50%;
+}
+
+.authors-list {
+  margin-top: 1.5rem;
+
+  .single-author {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    padding: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    border: dashed 1px #979797;
+    margin-bottom: 1rem;
+
+    .delete {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: 400;
+      color: #353f4a;
+      margin: 0;
+    }
+
+    .type {
+      font-size: 12px;
+      font-weight: 500;
+      color: #a4a4a4;
+      margin: 0;
+      margin-bottom: 0.25rem;
+    }
+
+    .info {
+      width: 100%;
+    }
+  }
+}
+.files-list {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid gray;
+
+  .add-files {
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .heading {
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-top: 8px;
+  }
+  .no-files {
+    background-color: #eeeeba;
+    font-size: 15px;
+    margin: 10px;
+    padding: 10px;
+    height: 30px;
+  }
+
+  .single-file {
+    display: flex;
+    flex-grow: 1;
+    padding: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    border: dashed 1px #979797;
+    margin-bottom: 1rem;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    .delete {
+      display: flex;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #353f4a;
+      margin: 0;
+    }
+
+    .size {
+      font-size: 12px;
+      font-weight: 500;
+      color: #a4a4a4;
+      margin: 0;
+      margin-bottom: 0.25rem;
+    }
+
+    .info {
+      width: 100%;
+    }
+  }
+}
+.file-list-red {
+  border: 1px solid #ba1a1a;
+}
+.error {
+  font-size: 11px;
+}
+
+.div-image {
+  position: relative;
+  height: 225px;
+  width: 175px;
+  margin-top: 10px;
+  border: solid gray 1px;
+  background-color: #dededf;
+  display: flex;
+  justify-content: center;
+}
+.div-image img {
+  height: 200px;
+  width: 150px;
+  margin: auto;
+  display: block;
+}
+
+.div-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}

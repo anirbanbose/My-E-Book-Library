@@ -1,0 +1,43 @@
+.book-card {
+  width: 600px;
+  min-width: 500px;
+  margin: 20px auto;
+}
+
+.book-container {
+  display: flex;
+}
+
+.inner-section {
+  flex: 50%;
+}
+
+.div-image {
+  position: relative;
+  height: 225px;
+  width: 175px;
+  margin-top: 10px;
+  border: solid gray 1px;
+  background-color: #dededf;
+  display: flex;
+  justify-content: center;
+}
+.div-image img {
+  height: 200px;
+  width: 150px;
+  margin: auto;
+  display: block;
+}
+
+.book-details {
+  font-size: 14px;
+}
+
+.copy-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.copy-link:hover {
+  color: rgb(214, 163, 85);
+}

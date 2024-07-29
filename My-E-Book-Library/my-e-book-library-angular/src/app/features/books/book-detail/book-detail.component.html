@@ -1,0 +1,72 @@
+<div class="mat-elevation-z8 wrapper">
+    <feature-page-header [headerText]="headerText" [showSearch]="false" [showAdd]="false" />
+    <div class="book-container">
+        <mat-card class="book-card">
+            <mat-card-header style="text-align: center;">
+                <h5>{{book.title}}</h5>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col" style="flex: 30%;">
+                        <div class="div-image">
+                            @if(book.bookImage){
+                            <img [src]="book.bookImage" alt="Book Cover" />
+                            }
+                            @else {
+                            <img src="assets/No-Image-Placeholder.png" alt="Book Cover" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col" style="flex: 70%;">
+                        @if(book.authors){
+                        <div class="book-details"><strong>By</strong> {{book.authors}}</div>
+                        }
+                        @if(book.subject){
+                        <div class="book-details"><strong>Subject :</strong> {{book.subject}}</div>
+                        }
+                        @if(book.publisher){
+                        <div class="book-details"><strong>Publisher :</strong> {{book.publisher}}</div>
+                        }
+                        @if(book.genres){
+                        <div class="book-details"><strong>Genre :</strong> {{book.genres}}</div>
+                        }
+                        @if(book.languages){
+                        <div class="book-details"><strong>Language :</strong> {{book.languages}}</div>
+                        }
+                        @if(book.isbN10){
+                        <div class="book-details"><strong>ISBN10 :</strong> {{book.isbN10}}</div>
+                        }
+                        @if(book.isbN13){
+                        <div class="book-details"><strong>ISBN13 :</strong> {{book.isbN13 | mask: '000-0-00-000000-0'}}
+                        </div>
+                        }
+                        @if(book.editionName){
+                        <div class="book-details"><strong>Edition :</strong> {{book.editionName}}</div>
+                        }
+                        @if(book.publishedDate){
+                        <div class="book-details"><strong>Published Date :</strong> {{book.publishedDate}}</div>
+                        }
+                        @if(book.noOfPages){
+                        <div class="book-details"><strong>No of pages :</strong> {{book.noOfPages}}</div>
+                        }
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col">
+                        @if(book.description){
+                        <div class="book-details"><strong>Description :</strong> {{book.description}}</div>
+                        }
+                        <!-- @if(book.files.length){
+                        <div class="book-details"><strong>No of pages :</strong> {{book.noOfPages}}</div>
+                        } -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <app-book-copy-table [dataSource]="fileDataSource"></app-book-copy-table>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<mat-form-field class="full-width" appearance="fill">
+    <mat-label>{{labelText}}</mat-label>
+    <mat-chip-set aria-label="Items" [style]="selectedItems.length > 0 && labelText !== ''? 'margin-top: 15px' : ''">
+        @for (item of selectedItems; track $index) {
+        <mat-chip (removed)="remove(item)">
+            {{item[textPropertyName]}}
+            <button matChipRemove aria-label="cancel">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+        }
+    </mat-chip-set>
+    <input type="text" [placeholder]="placeholderText" #inputControl matInput [formControl]="searchCtrl"
+        [matAutocomplete]="auto" />
+    @if(showAddButton) {
+    <button matSuffix mat-button aria-label="Add" type="button" (click)="addNewButtonClicked($event)">{{addButtonText}}
+        <mat-icon>add</mat-icon>
+    </button>
+    }
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" autoActiveFirstOption="true">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option[textPropertyName]}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

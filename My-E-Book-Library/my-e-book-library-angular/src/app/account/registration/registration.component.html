@@ -1,0 +1,141 @@
+<form [formGroup]="registrationForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="login-card">
+        <mat-card-header>
+            <mat-card-title>Register</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                        @if (registrationForm.controls['email'].hasError('required')) {
+                        <mat-error>Email is <strong>required</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['email'].hasError('maxlength')) {
+                        <mat-error>Email can't have more than <strong>500 characters</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['email'].hasError('email')) {
+                        <mat-error>Please enter a valid <strong>Email Address</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['email'].hasError('emailExists')) {
+                        <mat-error>This Email is <strong>not available.</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                        @if (registrationForm.controls['firstName'].hasError('required')) {
+                        <mat-error>First Name is <strong>required</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['firstName'].hasError('maxlength')) {
+                        <mat-error>First Name can't have more than <strong>250 characters</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="middleName">
+                        @if (registrationForm.controls['middleName'].hasError('maxlength')) {
+                        <mat-error>Middle Name can't have more than <strong>200 characters</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                        @if (registrationForm.controls['lastName'].hasError('required')) {
+                        <mat-error>Last Name is <strong>required</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['lastName'].hasError('maxlength')) {
+                        <mat-error>Last Name can't have more than <strong>250 characters</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" [type]="hidePassword() ? 'password' : 'text'">
+                        <a mat-icon-button matSuffix (click)="togglePasswordVisibility($event)"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword()">
+                            <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </a>
+                        <mat-hint>The Password length must be within
+                            <strong>8 and 20 characters</strong> and must contain
+                            both <strong>upper</strong> and <strong>lower</strong>
+                            case characters and <strong>digits</strong>.</mat-hint>
+                        @if (registrationForm.controls['password'].hasError('required')) {
+                        <mat-error>Password is <strong>required</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['password'].hasError('maxlength')) {
+                        <mat-error>Password can't have more than <strong>20 characters</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['password'].hasError('minLength')) {
+                        <mat-error>Password can't be less than <strong>8 characters</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['password'].hasError('pattern')) {
+                        <mat-error>The Password length must be within
+                            <strong>8 and 20 characters</strong> and must contain
+                            both <strong>upper</strong> and <strong>lower</strong>
+                            case characters and <strong>digits</strong>.</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px;">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput formControlName="confirmPassword"
+                            [type]="hideConfirmPassword() ? 'password' : 'text'">
+                        <a mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility($event)"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword()">
+                            <mat-icon>{{hideConfirmPassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </a>
+                        @if (registrationForm.controls['confirmPassword'].hasError('required')) {
+                        <mat-error>Confirm Password is <strong>required</strong></mat-error>
+                        }
+                        @if (registrationForm.controls['confirmPassword'].hasError('passwordsDoNotMatch')) {
+                        <mat-error>Passwords do not match</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            @if(errorMessages.length > 0){
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        @for(errorMessage of errorMessages; track $index){
+                        <li>
+                            <mat-error>{{errorMessage}}</mat-error>
+                        </li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+            }
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-flat-button color="primary" type="submit">Submit
+                <mat-icon>app_registration</mat-icon>
+            </button>
+            &nbsp;
+            <a mat-flat-button color="secondary" routerLink="/account/login">Cancel
+                <mat-icon>undo</mat-icon>
+            </a>
+        </mat-card-actions>
+    </mat-card>
+</form>

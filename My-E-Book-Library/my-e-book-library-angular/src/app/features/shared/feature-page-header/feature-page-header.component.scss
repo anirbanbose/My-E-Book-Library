@@ -1,0 +1,43 @@
+.header-container {
+    display: flex;
+  }
+
+  .item-left {
+    padding: 10px;
+    flex: 50%;
+    align-self: center
+  }
+  
+  .item-right {
+    flex: 50%;
+    display: flex;
+    align-content: end;
+  }
+
+  
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  } 
+  
+  .search-box{
+    margin-left: auto;
+    width:80%;
+  }
+
+  .add-button{
+    padding-right: 10px;
+    padding-top: 13px;
+  }

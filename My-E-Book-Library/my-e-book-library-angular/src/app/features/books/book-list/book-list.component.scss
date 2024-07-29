@@ -1,0 +1,66 @@
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 20px;
+}
+
+.book-list-item {
+    flex: 0 50%;  
+}
+
+.book-list-card {
+    border: 1px solid #c4c6d0;
+    border-radius: 10px;
+    margin: 10px 20px 10px 0;
+    padding: 20px;
+    min-height: 200px;
+    .item-flex{
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        .img-wrapper{
+            flex: 30%;
+            cursor: pointer;
+            img{
+                height: 200px;
+                width: 150px;
+                border: solid 1px rgb(53, 53, 53);
+            }
+            img:hover{
+                border: solid 1px rgb(214, 163, 85);
+            }
+    
+        }
+        .details-wrapper{
+            flex: 70%;
+            .book-title{
+                font-size: 16px;
+                font-weight: 500;
+                color: rgb(118, 118, 233);
+                cursor: pointer;
+            }
+            .book-title:hover{
+                color: rgb(214, 163, 85);
+            }
+            .book-details{
+                font-size: 14px;
+            }
+            .copy-link{
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .copy-link:hover{
+                color: rgb(214, 163, 85);
+            }
+        }
+        .menu-button{
+            position: absolute;
+            right: 0;
+            top:0;
+            cursor: pointer;   
+        }
+    }
+    
+    
+}

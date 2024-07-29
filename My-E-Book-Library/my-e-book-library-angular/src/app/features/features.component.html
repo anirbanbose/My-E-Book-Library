@@ -1,0 +1,62 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div>
+      <img style="width: 40px; float:left;" src="assets/stack-of-books.png">
+      <span class="page-title">My E-book Library</span>
+    </div>
+    <span class="flex-expand"></span>
+    <a [matMenuTriggerFor]="menu" class="icon-link">
+      <span class="user-name">{{userName}}</span>
+      <mat-icon class="material-icons">arrow_drop_down</mat-icon>
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [fixedTopGap]="60"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-nav-list>
+      <a class="button" mat-list-item routerLink="/dashboard" routerLinkActive="active-link"
+        ariaCurrentWhenActive="page">Dashboard</a>
+      <a class="button" mat-list-item routerLink="/books" routerLinkActive="active-link"
+        ariaCurrentWhenActive="page">Books</a>
+      <a class="button" mat-list-item routerLink="/authors" routerLinkActive="active-link"
+        ariaCurrentWhenActive="page">Authors</a>
+      <a class="button" mat-list-item routerLink="/publishers" routerLinkActive="active-link"
+        ariaCurrentWhenActive="page">Publishers</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    @if (isHandset$ | async) {
+    <button class="toggle-button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    }
+    <div style="padding: 20px;">
+      <router-outlet />
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent>
+    <a mat-menu-item routerLink="/settings/profile">
+      <mat-icon>person</mat-icon>
+      <span>My Profile</span>
+    </a>
+    <button mat-menu-item [matMenuTriggerFor]="settings">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Log out</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #settings="matMenu">
+  <a mat-menu-item routerLink="/settings/genres"><mat-icon>library_books</mat-icon><span>Genres</span></a>
+  <a mat-menu-item routerLink="/settings/languages"><mat-icon>language</mat-icon><span>Languages</span></a>
+</mat-menu>

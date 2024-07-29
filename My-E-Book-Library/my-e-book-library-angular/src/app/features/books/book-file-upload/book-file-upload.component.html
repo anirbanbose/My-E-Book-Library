@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>
+    {{title}}
+</h1>
+<div mat-dialog-content>
+
+    @if (fileUploadError != '') {
+    <mat-error class="error">One or more files could not be uploaded.</mat-error>
+    <mat-error class="error">{{fileUploadError}}</mat-error>
+    }
+    <app-file-upload #fileUpload [uploaderText]="uploaderText" [allowMultiple]="allowMultiple"
+        [allowedFileTypes]="allowedFileTypes" [maxFileSizeInMB]="maxFileSize" (onFileAdded)="fileAdded($event)"
+        (onFileValidationError)="onFileValidationError()" [fileHint]="fileHint"></app-file-upload>
+
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onDismiss()">Cancel</button>
+</div>

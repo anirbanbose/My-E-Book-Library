@@ -1,0 +1,17 @@
+.profile-card {
+  width: 600px;
+  min-width: 500px;
+  margin: 20px auto;
+}
+
+.profile-container {
+  display: flex;
+}
+
+.inner-section {
+  flex: 50%;
+}
+
+.change-password {
+  flex: 50%;
+}

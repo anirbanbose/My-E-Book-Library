@@ -1,0 +1,20 @@
+.sidenav-container {
+  height: 100%;
+  background: inherit;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.page-title{
+  color: white;
+  font-size: 18px;
+  margin-left: 10px;
+}

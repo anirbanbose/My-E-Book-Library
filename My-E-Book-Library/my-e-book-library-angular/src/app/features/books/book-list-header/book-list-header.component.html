@@ -1,0 +1,120 @@
+<div class="grid-container">
+    <div class="grid-left">
+        <h4 class="mat-h4">{{headerText}}</h4>
+    </div>
+    <div class="grid-right">
+        <div class="add-button">
+            <button mat-raised-button color="Primary" (click)="onAddClick()" type="button">
+                <span>Add New Book</span>
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-raised-button color="Primary" class="sort-button" type="button" [matMenuTriggerFor]="menu">
+                <span>Sort</span>
+                <mat-icon>sort</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="grid-left">
+        <mat-button-toggle-group [(ngModel)]="searchType" name="searchType" aria-label="Search Type"
+            (change)="onSearchTypeChange($event)">
+            <mat-button-toggle value="B">Basic Search</mat-button-toggle>
+            <mat-button-toggle value="A">Advanced Search</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class="grid-right">
+        @if(searchType == 'B'){
+        <div class="search-box">
+            <mat-form-field style="width: 95%;">
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="onSearchPressed($event)" placeholder="Search..." [(ngModel)]="searchText" />
+                @if (searchText) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
+                <button matSuffix mat-icon-button aria-label="Search" (click)="applyFilter()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        }
+        @else {
+        <div class="flex-container">
+            <div class="search-checkboxes">
+                <mat-checkbox class="checkbox" color="Primary" [(ngModel)]="authorSearch"
+                    (change)="onAuthorSearchChecked()">Search by Author</mat-checkbox>
+                <mat-checkbox class="checkbox" color="Primary" [(ngModel)]="publisherSearch"
+                    (change)="onPublisherSearchChecked()">Search by Publisher</mat-checkbox>
+                <mat-checkbox class="checkbox" color="Primary" [(ngModel)]="genreSearch"
+                    (change)="onGenreSearchChecked()">Search by Genre</mat-checkbox>
+                <mat-checkbox class="checkbox" color="Primary" [(ngModel)]="languageSearch"
+                    (change)="onLanguageSearchChecked()">Search by Language</mat-checkbox>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<div class="grid-container">
+    <ng-template #dynamicComponentContainer></ng-template>
+</div>
+
+<mat-menu #menu="matMenu">
+    <ng-template matMenuContent>
+        <button mat-menu-item type="button" (click)="sortClicked('Title')">
+            @if(searchFilter.sortColumn == 'Title'){
+            @if(!searchFilter.isSortAscending){
+            <mat-icon>arrow_downward</mat-icon>
+            }
+            @else {
+            <mat-icon>arrow_upward</mat-icon>
+            }
+            }
+            @else{
+            <span class="menu-filler">&nbsp;</span>
+            }
+            <span>Title</span>
+        </button>
+        <button mat-menu-item type="button" (click)="sortClicked('Languages')">
+            @if(searchFilter.sortColumn == 'Languages'){
+            @if(!searchFilter.isSortAscending){
+            <mat-icon>arrow_downward</mat-icon>
+            }
+            @else {
+            <mat-icon>arrow_upward</mat-icon>
+            }
+            }
+            @else{
+            <span class="menu-filler">&nbsp;</span>
+            }
+            <span>Language</span>
+        </button>
+        <button mat-menu-item type="button" (click)="sortClicked('Publisher')">
+            @if(searchFilter.sortColumn == 'Publisher'){
+            @if(!searchFilter.isSortAscending){
+            <mat-icon>arrow_downward</mat-icon>
+            }
+            @else {
+            <mat-icon>arrow_upward</mat-icon>
+            }
+            }
+            @else{
+            <span class="menu-filler">&nbsp;</span>
+            }
+            <span>Publisher</span>
+        </button>
+        <button mat-menu-item type="button" (click)="sortClicked('Genres')">
+            @if(searchFilter.sortColumn == 'Genres'){
+            @if(!searchFilter.isSortAscending){
+            <mat-icon>arrow_downward</mat-icon>
+            }
+            @else {
+            <mat-icon>arrow_upward</mat-icon>
+            }
+            }
+            @else{
+            <span class="menu-filler">&nbsp;</span>
+            }
+            <span>Genre</span>
+        </button>
+    </ng-template>
+</mat-menu>

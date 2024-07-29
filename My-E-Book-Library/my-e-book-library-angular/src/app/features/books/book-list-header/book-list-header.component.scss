@@ -1,0 +1,82 @@
+.flex-container {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.checkbox {
+  margin: 0 10px;
+}
+
+.flex-left {
+  padding: 10px;
+  flex: 20%;
+  align-self: center;
+}
+
+.flex-right {
+  flex: 30%;
+  display: flex;
+  align-content: flex-end;
+}
+
+.grid-left {
+  padding-left: 20px;
+  padding-top: 15px;
+}
+
+.grid-right {
+  padding-right: 10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
+.search-box {
+  padding-left: 10px;
+  width: 100%;
+}
+
+.add-button {
+  padding-right: 10px;
+  margin-top: 13px;
+  text-align: right;
+}
+
+.sort-button {
+  margin-left: 10px;
+}
+
+.search-checkboxes {
+  flex: 90%;
+  text-align: right;
+  height: 60px;
+  margin-top: 15px;
+}
+.grid-item {
+  padding-left: 20px;
+  padding-top: 15px;
+  margin-right: 15px;
+}
+.menu-filler {
+  padding-left: 32px;
+}

@@ -1,0 +1,62 @@
+<span mat-dialog-title>{{mode}} Author</span>
+<form [formGroup]="authorForm" (ngSubmit)="onSubmit()" novalidate>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstName">
+                    @if (authorForm.controls['firstName'].hasError('required')) {
+                    <mat-error>First Name is <strong>required</strong></mat-error>
+                    }
+                    @if (authorForm.controls['firstName'].hasError('maxlength')) {
+                    <mat-error>First Name can't have more than <strong>100 characters.</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput formControlName="middleName">
+                    @if (authorForm.controls['middleName'].hasError('maxlength')) {
+                    <mat-error>Middle Name can't have more than <strong>100 characters.</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName">
+                    @if (authorForm.controls['lastName'].hasError('required')) {
+                    <mat-error>Last Name is <strong>required</strong></mat-error>
+                    }
+                    @if (authorForm.controls['firstName'].hasError('maxlength')) {
+                    <mat-error>Last Name can't have more than <strong>100 characters.</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        @if(errorMessages.length > 0){
+        <div class="row">
+            <div class="col">
+                <ul>
+                    @for(errorMessage of errorMessages; track $index){
+                    <li>
+                        <mat-error>{{errorMessage}}</mat-error>
+                    </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+        }
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onCancel()" type="button">Cancel</button>
+        <button mat-button cdkFocusInitial type="submit">Save</button>
+    </mat-dialog-actions>
+</form>

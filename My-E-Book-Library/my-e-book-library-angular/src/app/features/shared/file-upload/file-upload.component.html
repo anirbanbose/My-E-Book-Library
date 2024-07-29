@@ -1,0 +1,8 @@
+<div class="dropzone" dragNDrop (fileDropped)="onFileDropped($event)">
+    <mat-icon class="icon">upload</mat-icon>
+    <input #fileDropRef type="file" (change)="fileBrowseHandler($event)" />
+    <h3>{{uploaderText}}</h3>
+    <h3>Or</h3>
+    <label for="fileDropRef">Browse</label>
+    <div class="hint">{{fileHint}}</div>
+</div>

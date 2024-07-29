@@ -1,0 +1,13 @@
+<h6 mat-dialog-title class="header">{{bookTitle}}</h6>
+<mat-dialog-content>
+    <app-book-copy-table [dataSource]="dataSource"></app-book-copy-table>
+
+    @if (totalRecordCount == 0) {
+    <div class="alert-info">
+        <div class="message">No record found.</div>
+    </div>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onClose()" type="button">Close</button>
+</mat-dialog-actions>

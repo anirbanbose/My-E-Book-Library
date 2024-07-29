@@ -1,0 +1,39 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+.link:hover {
+  color: rgb(214, 163, 85);
+}
+
+.book-count {
+  cursor: pointer;
+  color: rgb(118, 118, 233);
+}
+.book-count:hover {
+  color: rgb(214, 163, 85);
+  cursor: pointer;
+}

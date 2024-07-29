@@ -1,0 +1,70 @@
+<div class="mat-elevation-z8 wrapper">
+  <app-book-list-header [headerText]="'Books'" (searchEvent)="applyFilter($event)" [searchFilter]="bookSearchFilter"
+    (addButtonClickEvent)="addNewBook()"></app-book-list-header>
+
+  @if (totalRecordCount > 0) {
+  <ul class="book-list">
+    @for(book of books; track $index){
+    <li class="book-list-item">
+      <div class="book-list-card">
+        <div class="item-flex">
+          <div class="img-wrapper">
+            <img [src]="book.bookImage? book.bookImage : 'assets/No-Image-Placeholder.png'">
+          </div>
+          <div class="details-wrapper">
+            <div class="book-title">{{book.title}}</div>
+            @if(book.authors){
+            <div class="book-details">by {{book.authors}}</div>
+            }
+            @if(book.publisher){
+            <div class="book-details"><strong>Publisher :</strong> {{book.publisher}}</div>
+            }
+            @if(book.genres){
+            <div class="book-details"><strong>Genre :</strong> {{book.genres}}</div>
+            }
+            @if(book.languages){
+            <div class="book-details"><strong>Language :</strong> {{book.languages}}</div>
+            }
+
+            <div class="book-details"><strong>Copies :</strong> <a class="copy-link"
+                (click)="openBookCopyDialog(book.id)">
+                {{book.noOfCopies}}</a></div>
+
+          </div>
+          <button mat-mini-fab class="menu-button" fontSet="material-icons-outlined" aria-label="Action"
+            [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: book}">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+  }
+  @if (totalRecordCount == 0) {
+  <div class="alert-info">
+    <div class="message">No record found.</div>
+  </div>
+  }
+  <mat-paginator #paginator [length]="totalRecordCount" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50]"
+    aria-label="Select page">
+  </mat-paginator>
+
+</div>
+
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent let-book="element">
+    <a mat-menu-item (click)="goToBookDetail(book.id)">
+      <mat-icon>width_full</mat-icon>
+      <span>Detail</span>
+    </a>
+    <a mat-menu-item (click)="goToEditBook(book.id)">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </a>
+    <button mat-menu-item (click)="deleteBook(book.id)">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

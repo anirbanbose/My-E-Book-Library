@@ -1,0 +1,288 @@
+<div class="mat-elevation-z8 wrapper">
+    <feature-page-header [headerText]="headerText" [showSearch]="false" [showAdd]="false" />
+    <div class="book-container">
+        <form [formGroup]="bookForm" novalidate (ngSubmit)="onSubmit()" class="inner-section">
+            <mat-card class="book-card">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Book Title</mat-label>
+                                <input matInput formControlName="title">
+                                @if (bookForm.controls['title'].hasError('required')) {
+                                <mat-error>Title is <strong>required</strong></mat-error>
+                                }
+                                @if (bookForm.controls['title'].hasError('maxlength')) {
+                                <mat-error>Title can't have more than <strong>200 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="files-list" [ngClass]="{'file-list-red': isFormSubmitted && !isFileUploaded}">
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="heading col">
+                                        Ebook Files
+                                    </div>
+                                    <div class="col add-files">
+                                        <button mat-raised-button type="button" (click)="openBookCopyDialog()">
+                                            {{ ebooks.length > 0 ? 'Add more files' : 'Add files'}}
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                @if(ebooks.length > 0){
+                                <div class="single-file" *ngFor="let file of ebooks; let i = index">
+                                    <div class="info">
+                                        <h4 class="name">
+                                            {{ file?.name }}
+                                        </h4>
+                                        <p class="size">
+                                            {{ formatBytes(file?.size) }}
+                                        </p>
+                                    </div>
+                                    <button mat-icon-button class="delete" (click)="deleteFile(i)" type="button">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </div>
+                                }
+                                @else {
+                                <div class="no-files">
+                                    No files added.
+                                </div>
+                                }
+                            </div>
+                            @if (isFormSubmitted && !isFileUploaded) {
+                            <mat-error>Please upload at least one ebook file.</mat-error>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            @if(imageSrc){
+                            <div class="div-image">
+                                <img [src]="imageSrc" alt="Book image" />
+                                <button mat-mini-fab class="div-icon" type="button"
+                                    (click)="deleteImage()"><mat-icon>cancel</mat-icon></button>
+
+                            </div>
+                            }
+                            @else {
+                            <button mat-button type="button" (click)="openBookCoverDialog()">Add Book Cover
+                                Image</button>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Subject</mat-label>
+                                <input matInput formControlName="subject">
+                                @if (bookForm.controls['subject'].hasError('maxlength')) {
+                                <mat-error>Subject can't have more than <strong>200 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>ISBN10</mat-label>
+                                <input matInput formControlName="iSBN10" mask="0000000000">
+                                @if (bookForm.controls['iSBN10'].hasError('maxlength')) {
+                                <mat-error>ISBN10 can't have more than <strong>10 characters</strong></mat-error>
+                                }
+                                @if (bookForm.controls['iSBN10'].hasError('mask')) {
+                                <mat-error>ISBN10 must be a <strong>10 digit</strong> Number.</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>ISBN13</mat-label>
+                                <input matInput formControlName="iSBN13" mask="000-0-00-000000-0">
+                                @if (bookForm.controls['iSBN13'].hasError('maxlength')) {
+                                <mat-error>ISBN13 can't have more than <strong>13 characters</strong></mat-error>
+                                }
+                                @if (bookForm.controls['iSBN13'].hasError('mask')) {
+                                <mat-error>ISBN13 must be a <strong>13 digit</strong> Number.</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="authors-list">
+                                <div class="single-author" formArrayName="authors"
+                                    *ngFor="let author of authors.controls; let i = index">
+                                    <div class="info" formGroupName="{{i}}">
+                                        <h4 class="name">
+                                            {{ author.value.authorName }}
+                                        </h4>
+                                        <div>
+                                            <mat-form-field class="full-width">
+                                                <mat-select formControlName='authorTypeId' id="{{'authorType'+i}}"
+                                                    placeholder="Select Author Type...">
+                                                    @for (authorType of authorTypes; track authorType) {
+                                                    <mat-option
+                                                        [value]="authorType.id">{{authorType.typeName}}</mat-option>
+                                                    }
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <button mat-icon-button class="delete" (click)="deleteAuthor(i)" type="button">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input type="text" placeholder="Search author..." #authorControl matInput
+                                    [formControl]="authorSearchCtrl" [matAutocomplete]="autoAuthor" />
+                                <button matSuffix mat-button aria-label="Add" type="button"
+                                    (click)="addNewAuthorClicked($event)">Add New Author
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                <mat-autocomplete #autoAuthor="matAutocomplete"
+                                    (optionSelected)="authorSelected($event)" autoActiveFirstOption="true"
+                                    [displayWith]="showAuthorText">
+                                    <mat-option *ngFor="let option of filteredAuthors | async" [value]="option">
+                                        {{option['fullName']}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input type="text" placeholder="Search publisher..." matInput
+                                    [formControl]="publisherSearchCtrl" [matAutocomplete]="autoPublisher" />
+                                @if (publisherSearchCtrl.value) {
+                                <button matSuffix mat-icon-button aria-label="Clear" type="button"
+                                    (click)="clearPublisher()">
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                                }
+                                @else {
+                                <button matSuffix mat-button aria-label="Add" type="button"
+                                    (click)="addNewPublisherClicked($event)">Add New Publisher
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                }
+                                <mat-autocomplete #autoPublisher="matAutocomplete"
+                                    (optionSelected)="publisherSelected($event)" autoActiveFirstOption="true"
+                                    [displayWith]="showPublisherText">
+                                    <mat-option *ngFor="let option of filteredPublishers | async" [value]="option">
+                                        {{option['publisherName']}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-chip-auto-complete [preloadedOptions]="false" [fetchListOfOptions]="fetchGenres"
+                                #genres [textPropertyName]="'genreName'" [placeholderText]="'Type keywords...'"
+                                [showAddButton]="true" [addButtonText]="'Add New Genre'"
+                                (onAddButtonClicked)="addNewGenreClicked()"
+                                [labelText]="'Select Genre(s)'"></app-chip-auto-complete>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-chip-auto-complete [preloadedOptions]="false" [fetchListOfOptions]="fetchLanguages"
+                                #languages [textPropertyName]="'languageName'" [placeholderText]="'Type language...'"
+                                [labelText]="'Select Language(s)'"></app-chip-auto-complete>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Description</mat-label>
+                                <textarea matInput formControlName="description" rows="3"></textarea>
+                                @if (bookForm.controls['description'].hasError('maxlength')) {
+                                <mat-error>Description can't have more than <strong>500 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Edition</mat-label>
+                                <input matInput formControlName="editionName">
+                                @if (bookForm.controls['editionName'].hasError('maxlength')) {
+                                <mat-error>Edition can't have more than <strong>300 characters</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>No. of pages</mat-label>
+                                <input matInput formControlName="noOfPages">
+                                @if (bookForm.controls['noOfPages'].hasError('pattern')) {
+                                <mat-error>Enter only <strong>numbers</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <mat-label>Published date</mat-label>
+                                <input matInput formControlName="publishedDate" [matDatepicker]="picker"
+                                    (click)="picker.open()" (focus)="picker.open()">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                @if (bookForm.controls['publishedDate'].hasError('matDatepickerParse')) {
+                                <mat-error>Not a valid <strong>date</strong></mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    @if(isFormSubmitted && (bookForm.invalid || !isFileUploaded)){
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col">
+                            <mat-error>The book couldn't be saved. Please rectify the errors above.</mat-error>
+                            <ul>
+                                @for(errorMessage of errorMessages; track $index){
+                                <li>
+                                    <mat-error>{{errorMessage}}</mat-error>
+                                </li>
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                    }
+                </mat-card-content>
+                <mat-card-actions style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col">
+                            <button mat-flat-button color="primary" type="submit">Save
+                                <mat-icon>save</mat-icon></button>&nbsp;
+
+                            <button mat-raised-button type="button" (click)="backToList()">Back
+                                <mat-icon>undo</mat-icon></button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+
+    </div>
+</div>
